@@ -23,11 +23,17 @@ class MyScene extends Phaser.Scene {
         this.text = this.add.text(10, 10, 'Scene 1').setFontSize(32).setColor('#ff0');
 
         this.player_direction = 1;
-
+        this.player.angle = 0
     }
     
   // 毎フレーム実行される繰り返し処理
     update() {
+        //演習1-3
+         // 回転角度を更新
+        this.player.angle += 5;
+         // 回転角度を設定
+        this.player.setAngle( this.player.angle );
+
         // プレイヤーの向きフラグを変更
         if (this.player.x >= D_WIDTH - 100) this.player_direction = -1;
         if (this.player.x <= 100) this.player_direction = 1;
