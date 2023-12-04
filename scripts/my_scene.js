@@ -25,6 +25,14 @@ class MyScene extends Phaser.Scene {
         this.player.angle = 0
         this.text = this.add.text(10, 10, 'Scene 1').setFontSize(32).setColor('#ff0');
         this.player_direction = 1;
+
+        this.keys = {};
+        this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.helloText = this.add.text(100, 50, '');
+        this.heyText = this.add.text(100, 50, '');
+        this.text2 = this.add.text(600, 400, 'MyWorld').setFontSize(20).setColor('#ff0');
     }
     
   // 毎フレーム実行される繰り返し処理
@@ -63,15 +71,27 @@ class MyScene extends Phaser.Scene {
         // this.player.setVelocityY(100);
 
 
-        
-        //演習1-5
-        let cursors = this.input.keyboard.createCursorKeys();
-        if (cursors.left.isDown) {
-            this.player.x -= 50;
-            this.player2.x += 50;
-        } else if (cursors.right.isDown) {
-            this.player.x += 50;
-            this.player2.x -= 50;
+
+        // //演習1-5
+        // let cursors = this.input.keyboard.createCursorKeys();
+        // if (cursors.left.isDown) {
+        //     this.player.x -= 50;
+        //     this.player2.x += 50;
+        // } else if (cursors.right.isDown) {
+        //     this.player.x += 50;
+        //     this.player2.x -= 50;
+        // }
+
+
+
+        //演習1-6
+        if(this.keys.keyA.isDown){
+            this.helloText.setText('Hello!');
+        }else if(this.keys.keyS.isDown){
+            this.heyText.setText('Hey!');
+        }else if(this.keys.keyD.isDown){
+            this.helloText.setText('');
+            this.heyText.setText('');
         }
     }
 
