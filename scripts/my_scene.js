@@ -2,7 +2,7 @@
 // MyScene1クラス
 // 他のJSファイルから呼び出された場合はシーンを返す
 class MyScene extends Phaser.Scene {
-
+    hanakoFlag = false;
     // 継承した「Phaser.Scene」クラスのコンストラクタの呼び出し
     constructor() {
         super({ key: 'MyScene', active: true });
@@ -35,10 +35,12 @@ class MyScene extends Phaser.Scene {
         this.heyText = this.add.text(100, 50, '');
         this.text2 = this.add.text(600, 400, 'MyWorld').setFontSize(20).setColor('#ff0');
         this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.timeCounter = 0;
+        this.leftTime = 3;
     }
     
-  // 毎フレーム実行される繰り返し処理
-    update() {
+    // 毎フレーム実行される繰り返し処理
+    update(time, delta) {
         // //演習1-3
         //  // 回転角度を更新
         // this.player.angle += 5;
@@ -86,15 +88,15 @@ class MyScene extends Phaser.Scene {
 
 
 
-        // //演習1-6
-        // if(this.keys.keyA.isDown){
-        //     this.helloText.setText('Hello!');
-        // }else if(this.keys.keyS.isDown){
-        //     this.heyText.setText('Hey!');
-        // }else if(this.keys.keyD.isDown){
-        //     this.helloText.setText('');
-        //     this.heyText.setText('');
-        // }
+        //演習1-6
+        if(this.keys.keyA.isDown){
+            this.helloText.setText('Hello!');
+        }else if(this.keys.keyS.isDown){
+            this.heyText.setText('Hey!');
+        }else if(this.keys.keyD.isDown){
+            this.helloText.setText('');
+            this.heyText.setText('');
+        }
 
 
 
@@ -102,6 +104,46 @@ class MyScene extends Phaser.Scene {
         if(this.keys.keyW.isDown){
             let randx = Phaser.Math.Between(100, 400);
             this.hanako = this.add.image(randx, 100, 'hanako');
+        }
+
+
+
+        //演習1-8
+        let cursors = this.input.keyboard.createCursorKeys();
+        if (cursors.left.isDown) {
+            this.player.setVelocityX(-200);
+        }else if (cursors.right.isDown) {
+            console.log('right');
+            this.player.setVelocityX(200);
+        }else if (cursors.up.isDown) {
+            this.player.setVelocityY(-200);
+        }else if (cursors.down.isDown) {
+            this.player.setVelocityY(200);
+        } else {
+            this.player.setVelocityX(0);
+            this.player.setVelocityY(0);
+        }
+        this.timeCounter += delta;
+        if(this.timeCounter > 1000) {
+            this.timeCounter = 0;
+            this.leftTime --;
+        }
+        if(this.leftTime <= 0){
+            if(this.hanakoFlag){
+                this.hanako.destroy();
+            }
+            let randx = Phaser.Math.Between(200, 400);
+            let randy = Phaser.Math.Between(100, 200);
+             // this.hanako = this.physics.add.image(randx, randy, 'hanako');
+            let hanakoGroup = this.physics.add.group();
+            this.hanako = hanakoGroup.create(randx, randy, 'hanako');
+            this.hanakoFlag = true;
+            this.leftTime = 3;
+        }
+        // 当たり判定
+        this.physics.add.overlap(this.player, this.hanako, collision_detection, null, this);
+        function collision_detection() {
+        this.add.text(100, 150, '痛い！',);
         }
     }
 
