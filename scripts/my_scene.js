@@ -52,13 +52,27 @@ class MyScene extends Phaser.Scene {
         //     this.player.y -= 5;// 横方向へ移動を設定
         // }
 
+
+
         // //演習1-4
-        // 回転角度を更新
-        this.player.angle += 5;
-        // 回転角度を設定
-        this.player.setAngle( this.player.angle );
-        this.player.setVelocityX(100);
-        this.player.setVelocityY(100);
+        // // 回転角度を更新
+        // this.player.angle += 5;
+        // // 回転角度を設定
+        // this.player.setAngle( this.player.angle );
+        // this.player.setVelocityX(100);
+        // this.player.setVelocityY(100);
+
+
+        
+        //演習1-5
+        let cursors = this.input.keyboard.createCursorKeys();
+        if (cursors.left.isDown) {
+            this.player.x -= 50;
+            this.player2.x += 50;
+        } else if (cursors.right.isDown) {
+            this.player.x += 50;
+            this.player2.x -= 50;
+        }
     }
 
 }
