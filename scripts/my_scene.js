@@ -110,6 +110,7 @@ class MyScene extends Phaser.Scene {
 
 
         //演習1-8
+        //演習1-9
         let cursors = this.input.keyboard.createCursorKeys();
         if (cursors.left.isDown) {
             this.player.setVelocityX(-200);
@@ -150,6 +151,8 @@ class MyScene extends Phaser.Scene {
         function collision_detection() {
             this.hanakoDel = true;
         this.add.text(100, 150, '痛い！',);
+        //演習1-10
+        this.physics.pause();
         }
     }
 
